@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
+    <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
+    <!-- <link rel='stylesheet' href='/stylesheets/style.css' /> -->
+  </head>
+  <body>
+  	<div data-role="page">
+		<div data-role="header">
+			<h1>台北捷運各站景點</h1>
+		</div><!-- /header -->
+		<script type="text/javascript">
+		$.getJSON("http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%3D%22http%3A%2F%2Fweb.trtc.com.tw%2Fc%2Fselectstation2010.asp%22&format=json&diagnostics=true",
+   			function(json){
+   				console.log('here');
+   				// console.log(JSON.stringify(json['query']['results']['body']['div']['form']['table']['tr']['td']['table']['tr']['td'][1]['select']['optgroup']));
+   				var mrt_data = json['query']['results']['body']['div']['form']['table']['tr']['td']['table']['tr']['td'][1]['select']['optgroup'];
+   				for(var i=0; i<mrt_data.length; i++){
+   					var mrt_line = mrt_data[i]['label'].split(' ')[1];
+   					console.log(mrt_line);
+   					var markup = '<li class="mrt_line_li line_'+i+'">'+mrt_line+'</li>';
+   					$('ul.mrt_line_list').append(markup);
+
+   					var mrts = mrt_data[i]['option'];
+   					$('li.line_'+i).append('<ul class="mrts_ul mrts_line_'+i+'"></ul>');
+   					for(var j=0; j<mrts.length; j++){
+   						// console.log(mrts[j]['value']);
+   						var mrt_number = parseInt(mrts[j]['value'],10);
+   						var temp = '<li class="mrt" id="'+mrt_number+'"><a href="/mrt_spot/'+mrt_number+'" data-transition="slide">'+mrts[j]['content']+'</a></li>';
+   						$('ul.mrts_line_'+i).append(temp);
+   					}
+   				}
+   				$("ul.mrt_line_list").listview('refresh');
+   				// $('ul.mrt_line_list').
+   			}
+   		);
+		</script>
+		<div data-role="content">
+			<ul class="mrt_line_list" data-role="listview">
+			</ul>
+		</div>
+	</div><!-- /page -->
+  </body>
+</html>

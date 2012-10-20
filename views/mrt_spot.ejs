@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
+    <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
+    <!-- <link rel='stylesheet' href='/stylesheets/style.css' /> -->
+  </head>
+  <body>
+    <div data-role="page">
+      <script type="text/javascript">
+      $.getJSON("http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%3D%22http%3A%2F%2F54.248.134.150%2Fmrt_number%2F<%= mrt_number %>%22&format=json",
+          function(data){
+            var mrt_data = JSON.parse(data['query']['results']['body']['p']);
+            console.log(mrt_data['name']);
+            $('.mrt_header h1').html(mrt_data['name']+"&nbsp&nbsp週邊文創商家景點");
+          }
+        );
+      </script>
+  		<div data-role="header" class="mrt_header">
+  			<h1></h1>
+  		</div><!-- /header -->
+  		<script type="text/javascript">
+  		$.getJSON("http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%3D%22http%3A%2F%2F54.248.134.150%2Fmrt_number_spot%2F<%= mrt_number %>%22&format=json",
+     			function(json){
+            var spots = JSON.parse(json['query']['results']['body']['p']);
+            console.log(spots.length);
+            if(spots.length != 0){      
+              for(var i=0; i<spots.length; i++){
+                var markup = '<li class="spot" id="'+spots[i]['id']+'">'+spots[i]['name']+'</li>';
+                $('ul.mrt_spot_list').append(markup);
+              }
+            } else{
+              var markup = '<li class="spot">目前尚無資料 :p</li>';
+              $('ul.mrt_spot_list').append(markup);
+            }
+            $("ul.mrt_spot_list").listview('refresh');
+     			}
+     		);
+  		</script>
+  		<div data-role="content">
+  			<ul class="mrt_spot_list" data-role="listview">
+  			</ul>
+  		</div>
+  	</div><!-- /page -->
+  </body>
+</html>

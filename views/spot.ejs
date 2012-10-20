@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
+    <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
+    <link rel='stylesheet' href='/stylesheets/spot.css' />
+    <!-- <link rel='stylesheet' href='/stylesheets/style.css' /> -->
+  </head>
+  <body>
+    <div data-role="page">
+      <script type="text/javascript">
+      var spot_data;
+      console.log('<%= spot_id %>');
+      $.getJSON("http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%3D%22http%3A%2F%2F54.248.134.150%2Fspot%2F<%= spot_id %>%22&format=json",
+          function(data){
+            console.log(data);
+            spot_data = JSON.parse(data['query']['results']['body']['p']);
+            console.log(spot_data['name']);
+            $('.spot_header h1').html(spot_data['name']+"&nbsp&nbsp的詳細資料");
+            $('li.spot_info h3').html(spot_data['name']);
+            $('li.spot_info p.address').html('地址 : '+spot_data['address']);
+            $('li.spot_info p.tel').html('聯絡電話 : '+spot_data['tel']);
+            $('li.spot_info p.open_time').html('營業時間 : '+spot_data['open_time']);
+
+
+            $("ul.spot_ul").listview('refresh');
+
+          }
+        );
+      
+      </script>
+  		<div data-role="header" class="spot_header">
+  			<h1></h1>
+  		</div><!-- /header -->
+  		<div data-role="content">
+  			<ul class="spot_ul" data-role="listview">
+          <li class="spot_info">
+            <h3 class="ui-li-heading"></h3>
+            <img src="images/album-bb.jpg" class="ui-li-thumb ui-corner-tl">
+            <p class="address ui-li-desc"></p>
+            <p class="tel ui-li-desc"></p>
+            <p class="open_time ui-li-desc"></p>
+          </li>
+  			</ul>
+  		</div>
+  	</div><!-- /page -->
+  </body>
+</html>
