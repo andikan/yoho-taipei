@@ -7,13 +7,14 @@
 	width: 318px;
 	height: 158px;
 	margin: 40% auto;
+	margin-bottom: 10%;
 	background: url('../img/logo.png');
 }
 
 #facebook{
 	display: block;
-	width: 50%;
-	margin: 0% auto;
+	width: 70%;
+	margin: 3% auto;
 	border-radius: 8px;
 	background: -webkit-linear-gradient( top, rgba(0,136,217,0.8), rgba(10,55,124,1) );
 	box-shadow: 2px 2px 5px rgba(0,0,0,0.3),inset 0 1px 3px rgba(255,255,255,0.6);
@@ -26,7 +27,21 @@
 	text-decoration: none;
 }
 
+#MRT{
+	display: block;
+	width: 70%;
+	margin: 0 auto;
+	border-radius: 8px;
+	background: -webkit-linear-gradient( top, rgba(115,201,0,0.8), rgba(85,127,0,1) );
+	box-shadow: 2px 2px 5px rgba(0,0,0,0.3),inset 0 1px 3px rgba(255,255,255,0.6);
 
+	color: #fff;
+	text-align: center;
+	line-height: 2em;
+	font-size: 1.4em;
+	text-shadow: 0 1px 0 #000;	
+	text-decoration: none;
+}
 
 .container{
 	width: 80%;
@@ -42,13 +57,15 @@
 	display: inline-block;
 	width: 160px;
 	height: 51px;
-	padding:10px 35px;
+	padding:15px 35px;
 	margin-left: -30px;
 
-	font: 2em bold;
+	font: 1.3em bold;
 	vertical-align: 80%;
 	background: url(../img/tag.png) no-repeat;
+	color: #fff;
 }
+
 
 .manImg{
 	/*resize*/
@@ -57,19 +74,18 @@
 	display: inline-block;
 	border: 5px solid #fff;
 	margin: 15px 10px;
-
 }
-
 
 .fortune{
 	border: 1px solid gray;
 	border-radius:10px; 
 	margin-top: 15px;
-	/*background: -webkit-linear-gradient( top, #FDFDFD, #EEEEEE);*/
+	background: -webkit-linear-gradient( top, #FDFDFD, #EEEEEE);
 }
 
 #astroImage{
 	border-radius: 5px;
+	margin: 15px; 
 	vertical-align: middle;
 }
 .starName{
@@ -82,7 +98,50 @@
 
 }
 
+.Fcontent > div > img {
+	position: relative;
+	top:15px;
+}
+
+.tag{
+	display: inline-block;	
+	width: 120px;
+	height: 38px;
+	margin-left: -30px;
+	color: #fff;
+}
+
+.gold{
+	background: url(../img/tag2.png) no-repeat;
+}
+
+.green{
+	background: url(../img/tag3.png) no-repeat;
+}
+
+.green + span{
+	position: relative;
+	top: 12px;
+	left: 10px;
+	font-size: 1.4em;
+	color: #DAA600;
+}
+
+.tag > span{
+	position: relative;
+	top:10px;
+	left: 42px;
+}
+
+
 .place{
 	border: 1px solid gray;
 	border-radius:10px; 
+	margin-top: 15px;
+	background: -webkit-linear-gradient( top, #FDFDFD, #EEEEEE);
+}
+
+.place img{
+	width: 100%;
+	border-radius: 0 0 10px 10px; 
 }
