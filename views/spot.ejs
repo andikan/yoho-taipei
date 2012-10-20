@@ -25,8 +25,16 @@
             $('li.spot_info p.tel').html('聯絡電話 : '+spot_data['tel']);
             $('li.spot_info p.open_time').html('營業時間 : '+spot_data['open_time']);
 
+            $.getJSON("http://query.yahooapis.com/v1/public/yql?q=SELECT%20*%20FROM%20flickr.photos.search%20WHERE%20text%3D%22"+spot_data['name']+"%22%20AND%20api_key%3D%22aebae5c11919ac43272e9885c3f05b45%22&format=json",
+              function(flickr_data){
+                console.log(flickr_data['query']['results']['photo'][0]);
+                $("ul.spot_ul").listview('refresh');
+              }
+            );
+            
 
-            $("ul.spot_ul").listview('refresh');
+
+            
 
           }
         );
@@ -39,7 +47,7 @@
   			<ul class="spot_ul" data-role="listview">
           <li class="spot_info">
             <h3 class="ui-li-heading"></h3>
-            <img src="images/album-bb.jpg" class="ui-li-thumb ui-corner-tl">
+            <img src="" class="ui-li-thumb ui-corner-tl">
             <p class="address ui-li-desc"></p>
             <p class="tel ui-li-desc"></p>
             <p class="open_time ui-li-desc"></p>

@@ -37,11 +37,17 @@ app.configure(function(){
 app.configure('development', function(){
   app.set('port', process.env.PORT || 8888);
   app.use(express.errorHandler());
+  global.fbConf = {
+    appId: '428419963885140'
+  }
 });
 
 app.configure('production', function(){
   app.set('port', process.env.PORT || 5000);
   app.use(express.errorHandler());
+  global.fbConf = {
+    appId: '157028057773494'
+  }
 });
 
 app.get('/', routes.index);

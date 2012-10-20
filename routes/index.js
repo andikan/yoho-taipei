@@ -4,7 +4,10 @@
  */
 
 exports.index = function(req, res){
-  res.render('index', { title: 'Yoho Taipei' });
+  res.render('index', {
+   title: 'Yoho Taipei',
+   appId: fbConf['appId'] 
+  });
 };
 
 /*
