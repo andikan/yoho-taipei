@@ -15,7 +15,7 @@
           function(data){
             var mrt_data = JSON.parse(data['query']['results']['body']['p']);
             console.log(mrt_data['name']);
-            $('.mrt_header h1').html(mrt_data['name']+"&nbsp&nbsp週邊文創商家景點");
+            $('.mrt_header h1').html(mrt_data['name']+"&nbsp&nbsp周邊文創商家景點");
           }
         );
       </script>
@@ -29,7 +29,7 @@
             console.log(spots.length);
             if(spots.length != 0){      
               for(var i=0; i<spots.length; i++){
-                var markup = '<li class="spot" id="'+spots[i]['id']+'">'+spots[i]['name']+'</li>';
+                var markup = '<li class="spot" id="'+spots[i]['id']+'"><a href="/spot/'+spots[i]['id']+'" data-ajax="false">'+spots[i]['name']+'</a></li>';
                 $('ul.mrt_spot_list').append(markup);
               }
             } else{

@@ -51,13 +51,14 @@
             console.log(data);
             spot_data = JSON.parse(data['query']['results']['body']['p']);
             console.log(spot_data['name']);
-            $('.spot_header h1').html(spot_data['name']+"&nbsp&nbsp的詳細資料");
+            $('.spot_header h1').html(spot_data['name']);
             $('li.spot_info h3').html(spot_data['name']);
             $('li.spot_info p.address').html('地址 : '+spot_data['address']);
             $('li.spot_info p.tel').html('聯絡電話 : '+spot_data['tel']);
             $('li.spot_info p.open_time').html('營業時間 : '+spot_data['open_time']);
             if(spot_data['url'] != ''){
-              $('li.spot_info p.url a').html('網站 : '+spot_data['url']);
+              $('li.spot_info p.url a').html('網站 : '+spot_data['url']).attr('href', spot_data['url']);
+
             }     
             initialize(spot_data['latitude'], spot_data['longitude']);
 
@@ -66,14 +67,26 @@
                 var spot_pic = flickr_data['query']['results']['photo'][0];
                 console.log(spot_pic);
                 $('li.spot_info img').attr("src", 'http://farm'+spot_pic['farm']+'.staticflickr.com/'+spot_pic['server']+'/'+spot_pic['id']+'_'+spot_pic['secret']+'.jpg');
-
                 $("ul.spot_ul").listview('refresh');
               }
             );
-            
+
+            $.getJSON("http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%3D%22http%3A%2F%2F54.248.134.150%2Fspot_id_mrt%2F<%= spot_id %>%22&format=json",
+              function(mrt_data){
+                var mrt_data = JSON.parse(mrt_data['query']['results']['body']['p']);
+                console.log(mrt_data);
+                var temp = "週邊捷運站：";
+                for(var i=0; i<mrt_data.length; i++){
+                  temp += mrt_data[i]['name'];
+                  temp += "&nbsp&nbsp";
+                }
+                $('li.spot_info p.near_mrt').html(temp);
 
 
-            
+              
+                $("ul.spot_ul").listview('refresh');
+              }
+            );    
 
           }
         );
@@ -90,6 +103,7 @@
             <p class="address ui-li-desc"></p>
             <p class="tel ui-li-desc"></p>
             <p class="open_time ui-li-desc"></p>
+            <p class="near_mrt ui-li-desc"></p>
             <p class="url ui-li-desc"><a></a></p>
           </li>
   			</ul>
