@@ -1,23 +1,254 @@
 <html>
 <head>
   <title>YOHO Taipei</title>
-<meta name="viewport" content="initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
-<style>
- 	body.connected #login { display: none; }
-  	body.connected #logout { display: block; }
-  	body.not_connected #login { display: block; }
-  	body.not_connected #logout { display: none; }
-</style>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable = no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta chartset="utf-8">
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
+    <link rel="stylesheet" href="./css/themes/yoho.min.css" />
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
+    <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
+
 <script>
 var Astro=["魔羯座", "水瓶座", "雙魚座", "牡羊座","金牛座","雙子座", "巨蟹座", "獅子座", "處女座", "天秤座", "天蠍座", "射手座"];
 var Lucky_location=["正東方向", "東北方向", "正北方向", "西北方向","正西方向","西南方向", "正南方向", "東南方向"];
 </script>
-<script src="http://code.jquery.com/jquery-1.8.2.js"></script>
 </head>
 <body>
 
-<div id="fb-root"></div>
-<!-- 生日 轉換 星座 格式：05/11/1991 -->
+<div data-role="page" id="firstView">
+    <div data-role="content">
+      <div class="logo"></div>  
+      <a href="#profile" onClick="loginUser();" id="facebook">Facebook</a>
+    </div>
+</div>
+
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '<%= appId %>', // App ID
+      channelUrl : '//WWW.YOUR_DOMAIN.COM/channel.html', // Channel File
+      status     : true, // check login status
+      cookie     : true, // enable cookies to allow the server to access the session
+      xfbml      : true  // parse XFBML
+    });
+
+    FB.Event.subscribe('auth.statusChange', handleStatusChange);
+  };
+  
+     function handleStatusChange(response) {
+     document.body.className = response.authResponse ? 'connected' : 'not_connected';
+
+     if (response.authResponse) {
+       console.log(response);
+       
+       //onload
+       getUserBirthday();    
+
+       updateUserInfo(response);
+     }
+   }
+
+  // Load the SDK Asynchronously
+  (function(d){
+     var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement('script'); js.id = id; js.async = true;
+     js.src = "//connect.facebook.net/en_US/all.js";
+     ref.parentNode.insertBefore(js, ref);
+   }(document));
+</script>
+
+<!-- <div id="login">
+   <p><button onClick="loginUser();">Login</button></p>
+ </div>
+ <div id="logout">
+   <p><button  onClick="FB.logout();">Logout</button></p>
+ </div> -->
+
+ <script>
+   function loginUser() {    
+     FB.login(function(response) {
+        getUserBirthday();
+      }, {scope:'email, 	friends_birthday, user_birthday'});     
+     }
+ </script>
+
+<!--###################################-->
+<div data-role="page" data-theme="b" id="profile">
+  <div data-role="header" data-theme="b">
+    <h1>YOHO Taipei</h1>
+  </div>
+  <div data-role="content"  data-theme="b" >
+    <div class="container">
+
+      <div id="user-info"></div>
+
+      <select id="user-birthday-astro" type='text' placeholder='請選擇你的星座' required='true'>
+        <option value="水瓶座"> 01/20 ~ 02/18 水瓶座
+        <option value="雙魚座"> 02/19 ~ 03/20 雙魚座
+        <option value="牡羊座"> 03/21 ~ 04/19 牡羊座
+        <option value="金牛座"> 04/20 ~ 05/20 金牛座
+        <option value="雙子座"> 05/21 ~ 06/21 雙子座
+        <option value="巨蟹座"> 06/22 ~ 07/22 巨蟹座
+        <option value="獅子座"> 07/23 ~ 08/22 獅子座
+        <option value="處女座"> 08/23 ~ 09/22 處女座
+        <option value="天秤座"> 09/23 ~ 10/23 天秤座
+        <option value="天蠍座"> 10/24 ~ 11/22 天蠍座
+        <option value="射手座"> 11/23 ~ 12/21 射手座
+        <option value="魔羯座"> 12/22 ~ 01/19 魔羯座
+      </select>
+
+      <img id="astroImage" src=''></img>
+      <div class="fortune">
+        <section>
+          <div id="lucky_all_title">整體運：<img id="lucky_all" src=''></img></div>
+          <div id="lucky_love_title">愛情運：<img id="lucky_love" src=''></img></div>
+          <div id="lucky_business_title">事業運：<img id="lucky_business" src=''></img></div>
+          <div id="lucky_money_title">財　運：<img id="lucky_money" src=''></img></div>
+        </section>
+
+        <section>
+          <div id="shortToday"></div>
+          <div id="together"></div>
+          <div id="starnumber"></div>
+          <div id="starwhen"></div>
+          <div id="starwhere"></div>
+        </section>
+
+      </div> <!--  end fortune-->
+      <div class="place">
+          <img src="http://placekitten.com/360/240">
+      </div>
+
+      <div class="friends">
+        <ul id="user-friends" data-role="listview" data-inset="true" >
+        
+        </ul>
+      </div><!--  end friends-->
+
+    </div> <!--  end container-->
+  </div> <!--  end content-->
+</div> <!--  end page-->
+
+<script>
+  // //onload
+  // window.onload = onloadHandler(); 
+  // function onloadHandler(){ 
+  //   getUserBirthday();
+  //   // var astro = $('#user-birthday-astro').val();
+  //   // getAstroData(astro);
+  //   // getUserFriends();
+  // }
+
+  //onchange
+  $('#user-birthday-astro').change(function(){
+    var astro = $(this).val();
+    getAstroData(astro);
+    
+  });
+
+   function updateUserInfo(response) {
+     FB.api('/me', function(response) {
+       document.getElementById('user-info').innerHTML = '<img class="manImg" src="https://graph.facebook.com/' + response.id + '/picture"><span>'+response.name+"</span>";
+     });
+   }
+   function getUserBirthday(){
+     FB.api('/me?fields=birthday', function(response) {
+        console.log(response);   
+        // if(typeof(response.birthday) !== 'undefined'){
+        var astro = xingzuo(response.birthday);
+        $("#user-birthday-astro").val(astro);
+        getAstroData(astro);
+      // };
+    });
+   }   
+ </script>
+ <!-- <a href="#" onclick="getUserFriends();">Get friends</a><br> -->
+
+ <script>
+ function getUserFriends() {
+   FB.api('/me/friends&fields=name,picture,birthday', function(response) {
+     console.log('Got friends: ', response);
+
+     if (!response.error) {
+       var markup = '<li data-role="list-divider">和今日貴人一起出去玩吧！</li>';
+       var friends = response.data;
+       // console.log(friends);
+       var lucky_friends = new Array();
+       var counter = 0;
+
+       for (var i=0; i < friends.length; i++) {
+         var friend = friends[i];
+
+         if (typeof(friend['birthday']) === "undefined" ){
+            continue;
+         }
+         else if(xingzuo(friend['birthday']) !== together){
+            continue;
+         }
+         else{
+            // console.log(friend['birthday']+"->"+xingzuo(friend['birthday']));
+            lucky_friends[counter] = friend;
+            counter = counter+1;
+         }
+
+         // markup += '<img src="' + friend.picture.data.url + '"> ' + friend.name + xingzuo(friend['birthday']) + '<br>';
+
+       } //end for
+        
+        console.log(lucky_friends);
+        console.log(together);
+
+        lucky_friends.sort(function() {return 0.5 - Math.random()});
+
+        for(i=0; i <3; i++){
+          // console.log(lucky_friend['name']);
+          var lucky_friend = lucky_friends[i];
+          markup += '<li onclick="sentMessage('+lucky_friend.id+')"><img src="' + lucky_friend.picture.data.url + '"> <h3>' + lucky_friend.name +'</h3></li>';          
+        }
+
+       $('#user-friends').html(markup);
+     } //end if
+      $('#user-friends').listview("refresh");
+
+   });
+  }
+  // function sentMessage(friendname){
+  //    // assume we are already logged in
+  //   FB.init({appId: '428419963885140', xfbml: true, cookie: true});
+
+  //   FB.ui({
+  //       method: 'send',
+  //       name: 'Taipei Go!',
+  //       to: friendname,
+  //       description: '您是我的貴人',
+  //       link: 'http://www.ipeen.com.tw/comment/326501-Treasure-Hill-Artist-Village',
+  //   }, 
+  //   function(response) {
+  //     console.log('sendRequest response: ', response);
+  //   });  
+  // }
+
+  function sentMessage(friendname) {
+  FB.ui({
+    method: 'apprequests',
+    name: 'Taipei Go!',
+    to: friendname,
+    message: '邀請你一同參加台北捷運文化之旅',
+    description: '您是我的貴人',
+  }, 
+  function(response) {
+    console.log('sendRequest response: ', response);
+  });
+}
+ </script>
+
+ <!-- 生日 轉換 星座 格式：05/11/1991 -->
 <script>
 function xingzuo(friend_birthday) { 
   var start = 1901;
@@ -52,7 +283,6 @@ function xingzuo(friend_birthday) {
   return value;
 }
 </script>
-
 <!-- 取得星座資料 -->
 <script>
 var together;
@@ -83,8 +313,8 @@ function getAstroData(astro) {
     document.getElementById('lucky_money').src=lucky_money; 
 
     document.getElementById('astroImage').src=src;
-
     getUserFriends();
+
   });
   //integer format 7 -> 07
   function FormatNumberLength(num, length) {
@@ -97,192 +327,6 @@ function getAstroData(astro) {
 
 }
 </script>
-
-<script>
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId      : '<%= appId %>', // App ID
-      channelUrl : '//WWW.YOUR_DOMAIN.COM/channel.html', // Channel File
-      status     : true, // check login status
-      cookie     : true, // enable cookies to allow the server to access the session
-      xfbml      : true  // parse XFBML
-    });
-
-    FB.Event.subscribe('auth.statusChange', handleStatusChange);
-  };
-  
-     function handleStatusChange(response) {
-     document.body.className = response.authResponse ? 'connected' : 'not_connected';
-
-     if (response.authResponse) {
-       console.log(response);
-       
-       //onload
-       getUserBirthday();
-       //getUserFriends();
-
-       updateUserInfo(response);
-     }
-   }
-
-  // Load the SDK Asynchronously
-  (function(d){
-     var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement('script'); js.id = id; js.async = true;
-     js.src = "//connect.facebook.net/en_US/all.js";
-     ref.parentNode.insertBefore(js, ref);
-   }(document));
-</script>
-
-<div id="login">
-   <p><button onClick="loginUser();">Login</button></p>
- </div>
- <div id="logout">
-   <p><button  onClick="FB.logout();">Logout</button></p>
- </div>
-
- <script>
-   function loginUser() {    
-     FB.login(function(response) {
-        getUserBirthday();
-      }, {scope:'email, 	friends_birthday, user_birthday'});     
-     }
- </script>
-
-<div id="user-info"></div>
-<div id="user-birthday"></div>
-<!-- <a href="#" onclick="getUserBirthday();">User Birth</a><br> -->
-
-<div id="user-info"></div>
-<select id="user-birthday-astro" type='text' placeholder='請選擇你的星座' required='true'>
-  <option value="水瓶座"> 01/20 ~ 02/18 水瓶座
-  <option value="雙魚座"> 02/19 ~ 03/20 雙魚座
-  <option value="牡羊座"> 03/21 ~ 04/19 牡羊座
-  <option value="金牛座"> 04/20 ~ 05/20 金牛座
-  <option value="雙子座"> 05/21 ~ 06/21 雙子座
-  <option value="巨蟹座"> 06/22 ~ 07/22 巨蟹座
-  <option value="獅子座"> 07/23 ~ 08/22 獅子座
-  <option value="處女座"> 08/23 ~ 09/22 處女座
-  <option value="天秤座"> 09/23 ~ 10/23 天秤座
-  <option value="天蠍座"> 10/24 ~ 11/22 天蠍座
-  <option value="射手座"> 11/23 ~ 12/21 射手座
-  <option value="魔羯座"> 12/22 ~ 01/19 魔羯座
-</select>
-<img id="astroImage" src=''></img>
-<div id="shortToday"></div>
-<div id="together"></div>
-<div id="starnumber"></div>
-<div id="starwhen"></div>
-<div id="starwhere"></div>
-
-<div id="lucky_all_title">整體運：<img id="lucky_all" src=''></img></div>
-<div id="lucky_love_title">愛情運：<img id="lucky_love" src=''></img></div>
-<div id="lucky_business_title">事業運：<img id="lucky_business" src=''></img></div>
-<div id="lucky_money_title">財　運：<img id="lucky_money" src=''></img></div>
-
-<script>
-  // //onload
-  // window.onload = onloadHandler(); 
-  // function onloadHandler(){ 
-  //   getUserBirthday();
-  //   // var astro = $('#user-birthday-astro').val();
-  //   // getAstroData(astro);
-  //   // getUserFriends();
-  // }
-
-  //onchange
-  $('#user-birthday-astro').change(function(){
-    var astro = $(this).val();
-    getAstroData(astro);
-  
-  });
-
-   function updateUserInfo(response) {
-     FB.api('/me', function(response) {
-       document.getElementById('user-info').innerHTML = '<img src="https://graph.facebook.com/' + response.id + '/picture">' + response.name;
-     });
-   }
-   function getUserBirthday(){
-     FB.api('/me?fields=birthday', function(response) {
-        console.log(response);   
-        // if(typeof(response.birthday) !== 'undefined'){
-        var astro = xingzuo(response.birthday);
-        $("#user-birthday-astro").val(astro);
-        getAstroData(astro);
-      // };
-    });
-   }   
- </script>
- <!-- <a href="#" onclick="getUserFriends();">Get friends</a><br> -->
- <div id="user-friends"></div>
- <script>
- function getUserFriends() {
-   FB.api('/me/friends&fields=name,picture,birthday', function(response) {
-     console.log('Got friends: ', response);
-     var lucky_friends = [];
-
-     if (!response.error) {
-       var markup = '';
-       var friends = response.data;
-       // console.log(friends);
-       
-       var counter = 0;
-
-       for (var i=0; i < friends.length; i++) {
-         var friend = friends[i];
-
-         if (typeof(friend['birthday']) === "undefined" ){
-         	console.log('friend bd undefined');
-            continue;
-         }
-         else if(xingzuo(friend['birthday']) != together){
-            console.log('friend is not luck');
-            continue;
-         }
-         else{
-         	console.log('friend is luck');
-            // console.log(friend['birthday']+"->"+xingzuo(friend['birthday']));
-            lucky_friends[counter] = friend;
-            counter = counter+1;
-         }
-
-         // markup += '<img src="' + friend.picture.data.url + '"> ' + friend.name + xingzuo(friend['birthday']) + '<br>';
-
-       } //end for
-        
-        console.log(lucky_friends);
-        console.log("貴人星座"+together);
-
-        lucky_friends.sort(function() {return 0.5 - Math.random()});
-
-        for(i=0; i <3; i++){
-          // console.log(lucky_friend['name']);
-          var lucky_friend = lucky_friends[i];
-          markup += '<div class="friends" onclick="sentMessage('+lucky_friend.id+')"><img src="' + lucky_friend.picture.data.url + '"> ' + lucky_friend.name + xingzuo(lucky_friend.birthday)+'</div>' + '<br>';          
-        }
-
-       document.getElementById('user-friends').innerHTML = markup;
-
-     } //end if
-   });
-  }
-  function sentMessage(friendname){
-     // assume we are already logged in
-    FB.init({appId: '428419963885140', xfbml: true, cookie: true});
-
-    FB.ui({
-        method: 'send',
-        name: 'Taipei Go!',
-        to: friendname,
-        description: '您是我的貴人',
-        link: 'http://www.ipeen.com.tw/comment/326501-Treasure-Hill-Artist-Village',
-    });   
-  }
- </script>
-
- 
-
 
 
 </body>

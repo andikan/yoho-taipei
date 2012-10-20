@@ -1,0 +1,88 @@
+#firstView{
+	background: -webkit-radial-gradient(center, ellipse cover, rgba(177,96,201,0.83) 3%,rgba(177,96,201,0.88) 33%,rgba(150,0,102,1) 100%);
+	background: -moz-radial-gradient(center, ellipse cover, rgba(177,96,201,0.83) 3%, rgba(177,96,201,0.88) 33%, rgba(150,0,102,1) 100%);
+}
+
+.logo{
+	width: 318px;
+	height: 158px;
+	margin: 40% auto;
+	background: url('../img/logo.png');
+}
+
+#facebook{
+	display: block;
+	width: 50%;
+	margin: 0% auto;
+	border-radius: 8px;
+	background: -webkit-linear-gradient( top, rgba(0,136,217,0.8), rgba(10,55,124,1) );
+	box-shadow: 2px 2px 5px rgba(0,0,0,0.3),inset 0 1px 3px rgba(255,255,255,0.6);
+
+	color: #fff;
+	text-align: center;
+	line-height: 2em;
+	font-size: 1.4em;
+	text-shadow: 0 1px 0 #000;	
+	text-decoration: none;
+}
+
+
+
+.container{
+	width: 80%;
+	margin: 0 auto;
+}
+#user-info{
+	border: 1px solid gray;
+	border-radius:10px; 
+	background: -webkit-linear-gradient( top, #FDFDFD, #EEEEEE);
+}
+
+#user-info > span{
+	display: inline-block;
+	width: 160px;
+	height: 51px;
+	padding:10px 35px;
+	margin-left: -30px;
+
+	font: 2em bold;
+	vertical-align: 80%;
+	background: url(../img/tag.png) no-repeat;
+}
+
+.manImg{
+	/*resize*/
+	width: 75px;
+	height: 75px;
+	display: inline-block;
+	border: 5px solid #fff;
+	margin: 15px 10px;
+
+}
+
+
+.fortune{
+	border: 1px solid gray;
+	border-radius:10px; 
+	margin-top: 15px;
+	/*background: -webkit-linear-gradient( top, #FDFDFD, #EEEEEE);*/
+}
+
+#astroImage{
+	border-radius: 5px;
+	vertical-align: middle;
+}
+.starName{
+	display: inline-block;
+	font: 1.4em bold;
+	margin: 20px;
+
+}
+.starTime{
+
+}
+
+.place{
+	border: 1px solid gray;
+	border-radius:10px; 
+}

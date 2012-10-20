@@ -15,12 +15,14 @@
           function(data){
             var mrt_data = JSON.parse(data['query']['results']['body']['p']);
             console.log(mrt_data['name']);
-            $('.mrt_header h1').html(mrt_data['name']+"&nbsp&nbsp周邊文創商家景點");
+            $('.mrt_header h1').html(mrt_data['name']+"&nbsp&nbsp附近");
           }
         );
       </script>
   		<div data-role="header" class="mrt_header">
+        <a href="" data-icon="back" data-rel="back" class="ui-btn-left">Back</a>
   			<h1></h1>
+        <a href="/" data-icon="home" rel="external" class="ui-btn-right">Home</a>
   		</div><!-- /header -->
   		<script type="text/javascript">
   		$.getJSON("http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%3D%22http%3A%2F%2F54.248.134.150%2Fmrt_number_spot%2F<%= mrt_number %>%22&format=json",
