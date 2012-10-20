@@ -1,4 +1,17 @@
+#map_canvas {
+  margin-top: 80px;
+}
+li.spot_info h3 {
+  margin-left: 3em;
+}
 li.spot_info p {
   font-size: 14px;
   margin: .5em 0 .6em;
+  margin-left: 3em;
+}
+li.spot_info img {
+  top: 15px;
+  left: 10px;
+  max-height: 120px;
+  max-width: 120px;
 }

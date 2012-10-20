@@ -19,7 +19,7 @@ var Lucky_location=["正東方向", "東北方向", "正北方向", "西北方�
 <script>
   window.fbAsyncInit = function() {
     FB.init({
-      appId      : '<%= appId %>', // App ID
+      appId      : '428419963885140', // App ID
       channelUrl : '//WWW.YOUR_DOMAIN.COM/channel.html', // Channel File
       status     : true, // check login status
       cookie     : true, // enable cookies to allow the server to access the session
@@ -138,28 +138,24 @@ var Lucky_location=["正東方向", "東北方向", "正北方向", "西北方�
  function getUserFriends() {
    FB.api('/me/friends&fields=name,picture,birthday', function(response) {
      console.log('Got friends: ', response);
-     var lucky_friends = [];
 
      if (!response.error) {
        var markup = '';
        var friends = response.data;
        // console.log(friends);
-       
+       var lucky_friends = new Array();
        var counter = 0;
 
        for (var i=0; i < friends.length; i++) {
          var friend = friends[i];
 
          if (typeof(friend['birthday']) === "undefined" ){
-         	console.log('friend bd undefined');
             continue;
          }
-         else if(xingzuo(friend['birthday']) != together){
-            console.log('friend is not luck');
+         else if(xingzuo(friend['birthday']) !== together){
             continue;
          }
          else{
-         	console.log('friend is luck');
             // console.log(friend['birthday']+"->"+xingzuo(friend['birthday']));
             lucky_friends[counter] = friend;
             counter = counter+1;
