@@ -212,7 +212,7 @@ var Lucky_location=["正東方向", "東北方向", "正北方向", "西北方�
 
    function updateUserInfo(response) {
      FB.api('/me', function(response) {
-       document.getElementById('user-info').innerHTML = '<img class="manImg" src="https://graph.facebook.com/' + response.id + '/picture"><span>'+response.name+"</span>";
+       document.getElementById('user-info').innerHTML = '<img class="manImg" src="https://graph.facebook.com/' + response.id + '/picture"><div><span>'+response.name+"</span></div>";
      });
    }
    function getUserBirthday(){

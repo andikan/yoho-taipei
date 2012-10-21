@@ -53,17 +53,21 @@
 	background: -webkit-linear-gradient( top, #FDFDFD, #EEEEEE);
 }
 
-#user-info > span{
+#user-info > div{
 	display: inline-block;
 	width: 160px;
 	height: 51px;
-	padding:15px 0px 0px 35px ;
-	margin-left: -35px;
-
-	font: 1.3em bold;
+	margin-left: -30px;
 	vertical-align: 80%;
 	background: url(../img/tag.png) no-repeat;
+	
+}
+#user-info > div > span{
 	color: #fff;
+	font: 1.3em bold;
+	position: relative;
+	top:15px;
+	left: 35px;
 }
 
 
