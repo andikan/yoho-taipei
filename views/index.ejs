@@ -149,7 +149,7 @@ var Lucky_location=["正東方向", "東北方向", "正北方向", "西北方�
           
           <div>
             <div class="tag green"><span>今日運勢</span></div>
-            <span id="shortToday"></span>
+            <p id="shortToday"></p>
           </div>
           
           <div id="starnumber"></div>
@@ -363,9 +363,9 @@ function getAstroData(astro) {
 
     document.getElementById('shortToday').innerHTML = shortToday; 
     document.getElementById('together').innerHTML = together; 
-    document.getElementById('starnumber').innerHTML = '幸運數字：'+starnumber; 
-    document.getElementById('starwhen').innerHTML = '吉時吉色：'+starwhen; 
-    document.getElementById('starwhere').innerHTML = '開運方位：'+ (Lucky_location.indexOf(starwhere)+1); 
+    // document.getElementById('starnumber').innerHTML = '幸運數字：'+starnumber; 
+    // document.getElementById('starwhen').innerHTML = '吉時吉色：'+starwhen; 
+    // document.getElementById('starwhere').innerHTML = '開運方位：'+ (Lucky_location.indexOf(starwhere)+1); 
 
     document.getElementById('lucky_all').src=lucky_all; 
     document.getElementById('lucky_love').src=lucky_love; 
